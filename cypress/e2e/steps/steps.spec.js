@@ -1,6 +1,10 @@
 describe('Steps page', ()=>{
-  it('should show valid title on each step', () => {
+  beforeEach(()=>{
     cy.visit("/pages/layout/stepper")
+  })
+
+
+  it('should show valid title on each step', () => {
 
     const containerSelector = 'nb-card-body nb-stepper.horizontal[orientation="horizontal"]'
 
@@ -17,24 +21,21 @@ describe('Steps page', ()=>{
     cy.get(`${containerSelector}`).contains('next').should('be.disabled')
   });
 
-  it('should show valid title on each step', () => {
-    cy.visit("/pages/layout/stepper")
+  it('should show valid title on each step (with aliases)', () => {
+    cy.get('nb-card-body nb-stepper.horizontal[orientation="horizontal"]').as('container')
+    cy.get('@container').find('h3').as('stepperTitle')
+    cy.get('@container').contains('next').as('nextButton')
 
-    const containerSelector = 'nb-card-body nb-stepper.horizontal[orientation="horizontal"]'
+    cy.get('@stepperTitle').should('have.text', "Step content #1")
+    cy.get('@nextButton').click()
 
-    const title = cy.get(`${containerSelector} h3`)
-    const button =  cy.get(`${containerSelector}`).contains('next')
+    cy.get('@stepperTitle').should('have.text', "Step content #2")
+    cy.get('@nextButton').click()
 
-    title.should('have.text', "Step content #1")
-    button.click()
+    cy.get('@stepperTitle').should('have.text', "Step content #3")
+    cy.get('@nextButton').click()
 
-    title.should('have.text', "Step content #2")
-    button.click()
-
-    title.should('have.text', "Step content #3")
-    button.click()
-
-    title.should('have.text', "Step content #4")
-    button.should('be.disabled')
+    cy.get('@stepperTitle').should('have.text', "Step content #4")
+    cy.get('@nextButton').should('be.disabled')
   });
 })
