@@ -25,13 +25,18 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add('fillForm', (name, email) => {
+  cy.get('nb-card.inline-form-card').as('form');
+  cy.get('@form').find('[placeholder="Jane Doe"]').as('nameInput');
+  cy.get('@form').find('[placeholder="Email"]').as('emailInput');
+
+  cy.get('@nameInput').type(name);
+  cy.get('@emailInput').type(email);
+
+  cy.get('@form').find('[type="submit"]').click();
+});
+
+Cypress.Commands.add('getByDataTestId', (id) => {
+  return cy.get(`#${id}`);
+});
