@@ -1,3 +1,5 @@
+import {fillForm} from "../../utils/formUtils";
+import FormLayoutsPage from "../../pageObjects/formLayouts/FormLayoutsPage";
 
 describe('Forms page', ()=>{
   it('form', ()=>{
@@ -16,5 +18,21 @@ describe('Forms page', ()=>{
     cy.get('@emailInput').invoke('val').should('be.equal', email)
 
     cy.get('@form').find('[type="submit"]').click()
+  })
+
+  it('form (functions)', ()=>{
+    cy.visit('/pages/forms/layouts')
+    fillForm('Stanislav', 'test@test.com')
+  })
+
+  it('form (custom command)', () => {
+    cy.visit('/pages/forms/layouts')
+    cy.fillForm('Stanislav', 'test@test.com')
+  })
+
+  it('form (Page Object model)', () => {
+    const formsPage = new FormLayoutsPage()
+    formsPage.visit()
+    formsPage.fillForm('Page Object', 'pom@test.com')
   })
 })

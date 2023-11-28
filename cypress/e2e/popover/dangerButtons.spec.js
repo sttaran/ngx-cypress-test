@@ -11,7 +11,8 @@ describe('Popover page', ()=>{
             }).then(()=>{
               cy.log(`Buttons text : ${JSON.stringify(buttonsText)}`)
               expect(buttonsText).to.deep.equal(['Left','Top', 'Bottom', 'Right'])
+              cy.wrap(buttonsText).should('deep.equal', ['Left','Top', 'Bottom', 'Right'])
             })
-      })
-  });
+        })
+    });
 })

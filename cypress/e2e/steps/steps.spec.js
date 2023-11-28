@@ -1,6 +1,9 @@
+import StepperPage from "../../pageObjects/stepperPage/StepperPage";
+
 describe('Steps page', ()=>{
+  const stepperPage = new StepperPage()
   beforeEach(()=>{
-    cy.visit("/pages/layout/stepper")
+    stepperPage.visit()
   })
 
 
@@ -37,5 +40,33 @@ describe('Steps page', ()=>{
 
     cy.get('@stepperTitle').should('have.text', "Step content #4")
     cy.get('@nextButton').should('be.disabled')
+  });
+
+  it('should show valid title on each step (with POM)', () => {
+    stepperPage.title.should('have.text', "Step content #1")
+    stepperPage.nextButton.click()
+
+    stepperPage.title.should('have.text', "Step content #2")
+    stepperPage.nextButton.click()
+
+    stepperPage.title.should('have.text', "Step content #3")
+    stepperPage.nextButton.click()
+
+    stepperPage.title.should('have.text', "Step content #4")
+    stepperPage.nextButton.should('be.disabled')
+  });
+
+  it.only('should show valid title on each step (with POM 2)', () => {
+    stepperPage.validateTitleValue( "Step content #1")
+    stepperPage.clickNextButton()
+
+    stepperPage.validateTitleValue( "Step content #2")
+    stepperPage.clickNextButton()
+
+    stepperPage.validateTitleValue( "Step content #3")
+    stepperPage.clickNextButton()
+
+    stepperPage.validateTitleValue( "Step content #4")
+    stepperPage.nextButton.should('be.disabled')
   });
 })
