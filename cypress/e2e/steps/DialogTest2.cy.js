@@ -8,8 +8,6 @@ describe("modal-overlays/dialog page", () => {
       cy.wrap($element).click()
     })
 
-    // Чекати відображення модального вікна
-    cy.wait(500)
     // Перевірка, що модальне вікно показане
     cy.get('nb-card.form-input-card').should('be.visible');
 
@@ -18,14 +16,6 @@ describe("modal-overlays/dialog page", () => {
 
     // Перевірка наявності інпута
     cy.get('nb-card-body input[placeholder="Name"]').should('exist');
-
-    // // Перевірка наявності кнопки 'Submit'
-    // cy.get('#cdk-overlay-1 button.cancel.appearance-filled.size-medium.status-danger.shape-rectangle.transitions')
-    //   .should('be.visible');
-    //
-    // // Перевірка наявності кнопки 'Cancel'
-    // cy.get('#cdk-overlay-1 button.cancel.appearance-filled.size-medium.status-danger.shape-rectangle.transitions')
-    //   .should('be.visible');
 
     // Перевірка наявності кнопки 'Submit'
     cy.get('.cdk-overlay-container nb-dialog-container button.appearance-filled.size-medium.status-success.shape-rectangle.transitions')
