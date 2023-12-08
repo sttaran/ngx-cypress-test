@@ -1,12 +1,12 @@
 Cypress.Commands.add('addUser', (id, name, firstName, email, age) => {
-    cy.get('input[placeholder="ID"]').type(id);
-    cy.get('input[placeholder="First Name"]').type(firstName);
-    cy.get('input[placeholder="Last Name"]').type(name);
-    cy.get('input[placeholder="Username"]').type(name);
-    cy.get('input[placeholder="E-mail"]').type(email);
-    cy.get('input[placeholder="Age"]').type(age);
-    cy.get('.ng2-smart-actions-title-add').click(); // Натискаємо на кнопку додавання користувача // // чомусь не знаходить
-});
+  cy.get('input[placeholder="ID"]').type(id);
+  cy.get('input[placeholder="First Name"]').type(firstName);
+  cy.get('input[placeholder="Last Name"]').type(name);
+  cy.get('input[placeholder="Username"]').type(name);
+  cy.get('input[placeholder="E-mail"]').type(email);
+  cy.get('input[placeholder="Age"]').type(age);
+  cy.get('.ng2-smart-actions-title-add').click(); // Натискаємо на кнопку додавання користувача // // чомусь не знаходить
+})
 
 Cypress.Commands.add('editUser', (newId, newFirstName, newUsername, newEmail, newAge) => {
     cy.get('input[placeholder="ID"]').clear().type(newId);

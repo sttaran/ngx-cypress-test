@@ -25,6 +25,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
+import '@bahmutov/cy-api'
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -42,4 +44,23 @@ Cypress.Commands.add('fillForm', (name, email) => {
   cy.get('@emailInput').type(email);
 
   cy.get('@form').find('[type="submit"]').click();
+});
+
+Cypress.Commands.overwrite('visit', (originalVisit, url, options = {}) => {
+  const auth = {
+    username: 'guest',
+    password: 'welcome2qauto',
+  };
+
+  options.onBeforeLoad = (contentWindow) => {
+    const base64Credentials = btoa(`${auth.username}:${auth.password}`);
+    contentWindow.fetch = null; // Disable fetch to prevent any unexpected behavior
+    contentWindow.XMLHttpRequest.prototype.originalOpen = contentWindow.XMLHttpRequest.prototype.open;
+
+    contentWindow.XMLHttpRequest.prototype.open = function (method, url) {
+      this.originalOpen(method, url, true, auth.username, auth.password);
+    };
+  };
+
+  return originalVisit(url, options);
 });
